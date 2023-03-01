@@ -4,3 +4,7 @@ logs/
 
 main
 msgw
+
+go.sum
+
+pdoc/

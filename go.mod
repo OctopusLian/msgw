@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/garyburd/redigo v1.6.4
 	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
 	github.com/gin-gonic/gin v1.8.1
@@ -13,6 +14,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.14.0
 	github.com/swaggo/swag v1.8.8
+	golang.org/x/time v0.0.0-20220609170525-579cf78fd858
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/gorm v1.24.2
