@@ -12,13 +12,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/e421083458/gorm"
-	_ "github.com/e421083458/gorm/dialects/mssql"
-	_ "github.com/e421083458/gorm/dialects/mysql"
-	"github.com/e421083458/gorm/dialects/postgres"
-	_ "github.com/e421083458/gorm/dialects/sqlite"
 	"github.com/erikstmartin/go-testdb"
 	"github.com/jinzhu/now"
+	"msgw/gorm"
+	_ "msgw/gorm/dialects/mssql"
+	_ "msgw/gorm/dialects/mysql"
+	_ "msgw/gorm/dialects/sqlite"
 )
 
 var (

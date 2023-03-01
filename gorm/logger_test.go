@@ -3,8 +3,8 @@ package gorm_test
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/e421083458/gorm"
 	"log"
+	"msgw/gorm"
 	"os"
 	"testing"
 	"time"
