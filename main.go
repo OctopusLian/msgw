@@ -1,22 +1,48 @@
 package main
 
 import (
+	"flag"
 	"msgw/common/lib"
+	"msgw/dao"
 	"msgw/router"
 	"os"
 	"os/signal"
 	"syscall"
 )
 
+//endpoint dashboard后台管理  server代理服务器
+//config ./conf/prod/ 对应配置文件夹
+
+var (
+	endpoint = flag.String("endpoint", "", "input endpoint dashboard or server")
+	config   = flag.String("config", "", "input config file like ./conf/dev/")
+)
+
 func main() {
-	//如果configPath为空，则从命令行 '-config=./conf/prod/' 中读取
-	lib.InitModule("./conf/dev/", []string{"base", "mysql", "redis"})
-	defer lib.Destroy()
-	router.HttpServerRun() // router初始化和服务开启
+	flag.Parse()
+	if *endpoint == "" {
+		flag.Usage()
+		os.Exit(1)
+	}
+	if *config == "" {
+		flag.Usage()
+		os.Exit(1)
+	}
 
-	quit := make(chan os.Signal)
-	signal.Notify(quit, syscall.SIGKILL, syscall.SIGQUIT, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
+	if *endpoint == "dashboard" {
+		lib.InitModule(*config, nil)
+		defer lib.Destroy()
+		router.HttpServerRun()
 
-	router.HttpServerStop()
+		quit := make(chan os.Signal)
+		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+		<-quit
+
+		router.HttpServerStop()
+	} else {
+		lib.InitModule(*config, nil)
+		defer lib.Destroy()
+		dao.ServiceManagerHandler.LoadOnce()
+		dao.AppManagerHandler.LoadOnce()
+	}
 }
