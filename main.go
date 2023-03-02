@@ -30,7 +30,7 @@ func main() {
 	}
 
 	if *endpoint == "dashboard" {
-		lib.InitModule(*config, nil)
+		lib.InitModule(*config)
 		defer lib.Destroy()
 		router.HttpServerRun()
 
@@ -40,7 +40,7 @@ func main() {
 
 		router.HttpServerStop()
 	} else {
-		lib.InitModule(*config, nil)
+		lib.InitModule(*config)
 		defer lib.Destroy()
 		dao.ServiceManagerHandler.LoadOnce()
 		dao.AppManagerHandler.LoadOnce()

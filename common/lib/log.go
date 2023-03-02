@@ -33,6 +33,20 @@ const (
 
 var Log *Logger
 
+type Trace struct {
+	TraceId     string
+	SpanId      string
+	Caller      string
+	SrcMethod   string
+	HintCode    int64
+	HintContent string
+}
+
+type TraceContext struct {
+	Trace
+	CSpanId string
+}
+
 type Logger struct {
 }
 
@@ -105,7 +119,7 @@ func checkDLTag(dltag string) string {
 	return dltag
 }
 
-//map格式化为string
+// map格式化为string
 func parseParams(m map[string]interface{}) string {
 	var dltag string = "_undef"
 	if _dltag, _have := m["dltag"]; _have {
