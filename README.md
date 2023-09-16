@@ -5,7 +5,8 @@
 - Golang  
 - Vue  
 - MySQL  
+- Gin  
+- Gorm  
+- Network  
 
-# 注意  
 
-- 需要定制网站、管理系统可以私聊  
