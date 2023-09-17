@@ -3,6 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"log"
 	"msgw/common/lib"
 	"msgw/controller"
@@ -71,7 +73,7 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 			"message": "pong",
 		})
 	})
-	//router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	adminLoginRouter := router.Group("/admin_login")
 	store, err := sessions.NewRedisStore(10, "tcp", lib.GetStringConf("base.session.redis_server"), lib.GetStringConf("base.session.redis_password"), []byte("secret"))
@@ -84,8 +86,9 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 		middleware.RequestLog(),
 		middleware.TranslationMiddleware())
 	{
-		controller.AdminLoginRegister(adminLoginRouter) // 路由注册
+		controller.AdminLoginRegister(adminLoginRouter)
 	}
+
 	adminRouter := router.Group("/admin")
 	adminRouter.Use(
 		sessions.Sessions("mysession", store),
@@ -105,7 +108,7 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 		middleware.SessionAuthMiddleware(),
 		middleware.TranslationMiddleware())
 	{
-
+		controller.ServiceRegister(serviceRouter)
 	}
 
 	appRouter := router.Group("/app")
@@ -116,7 +119,7 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 		middleware.SessionAuthMiddleware(),
 		middleware.TranslationMiddleware())
 	{
-
+		controller.APPRegister(appRouter)
 	}
 
 	dashRouter := router.Group("/dashboard")
@@ -127,10 +130,9 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 		middleware.SessionAuthMiddleware(),
 		middleware.TranslationMiddleware())
 	{
-
+		controller.DashboardRegister(dashRouter)
 	}
 
 	router.Static("/dist", "./dist")
-
 	return router
 }
