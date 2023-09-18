@@ -22,7 +22,10 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="logout">
+          <el-dropdown-item @click.native="changePwd">
+            <span style="display:block;">修改密码</span>
+          </el-dropdown-item>
+          <el-dropdown-item disabled="true" @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -60,9 +63,13 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
+    // async 异步
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    changePwd() {
+      console.log('changePwd')
     }
   }
 }

@@ -23,7 +23,7 @@ func AdminLoginRegister(group *gin.RouterGroup) {
 func (adminlogin *AdminLoginController) AdminLogin(c *gin.Context) {
 	params := &dto.AdminLoginInput{}
 	if err := params.BindValidParam(c); err != nil {
-		middleware.ResponseError(c, 1001, err)
+		middleware.ResponseError(c, 2000, err)
 		return
 	}
 	//1. params.UserName 取得管理员信息 admininfo
@@ -58,7 +58,6 @@ func (adminlogin *AdminLoginController) AdminLogin(c *gin.Context) {
 
 	out := &dto.AdminLoginOutput{Token: admin.UserName}
 	middleware.ResponseSuccess(c, out)
-	middleware.ResponseSuccess(c, "")
 }
 
 func (adminlogin *AdminLoginController) AdminLoginOut(c *gin.Context) {
